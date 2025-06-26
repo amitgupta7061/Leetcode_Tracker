@@ -1,103 +1,110 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from 'react';
+import { ExternalLink, Github, Trophy } from 'lucide-react';
+
+export default function LeetCodePage() {
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+
+  const profiles = [
+    {
+      id: 'a_mmitt',
+      displayName: 'Amit Gupta',
+      username: 'a_mmitt',
+      profileUrl: 'https://leetcode.com/a_mmitt',
+      heatmapImage: 'https://leetcard.jacoblin.cool/a_mmitt?theme=dark,forest&ext=heatmap',
+      description: 'Passionate problem solver with a focus on algorithms and data structures.',
+    },
+    {
+      id: 'a_mitt',
+      displayName: 'Amit Gupta',
+      username: 'a_mitt',
+      profileUrl: 'https://leetcode.com/a_mitt',
+      heatmapImage: 'https://leetcard.jacoblin.cool/a_mitt?theme=dark,forest&ext=heatmap',
+      description: 'Dedicated to teaching and sharing coding knowledge with the community.',
+    }
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="min-h-screen bg-gray-950 text-gray-100 font-sans antialiased">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden py-4 px-4 sm:px-6 lg:px-8"> 
+          <h1 className="text-xl md:text-2xl font-extrabold text-white mb-3 leading-tight text-center"> 
+            My <span className="bg-gradient-to-r from-orange-400 to-orange-700 bg-clip-text text-transparent">LeetCode</span> Profiles
+          </h1>  
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Profiles Section */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-12"> 
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {profiles.map((profile, index) => (
+            <div
+              key={profile.id}
+              className={`group relative bg-gray-800 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 transform ${
+                hoveredCard === index ? 'scale-[1.002] ring-2 ring-orange-400 ring-opacity-50' : 'hover:scale-[1.01]'
+              }`}
+              onMouseEnter={() => setHoveredCard(index)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              {/* Card Header */}
+              <div className="relative p-6 pb-4 bg-gray-800 border-b border-gray-700"> {/* Removed gradient, consistent bg */}
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-3"> {/* Reduced mb */}
+                    <div>
+                      <h2 className="text-xl font-bold text-white mb-1">{profile.displayName}</h2> {/* Reduced font size */}
+                      <p className="text-blue-400 font-semibold">@{profile.username}</p>
+                    </div>
+                    <div className="flex items-center">
+                      <a
+                        href={profile.profileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-3 py-1.5 bg-orange-500 hover:bg-orange-700 text-white font-medium rounded-full transition-all duration-300 shadow-lg group-hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-75 text-sm"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5 mr-1.5" /> {/* Smaller icon and margin */}
+                        <span>View Profile</span>
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <p className="text-gray-300 text-sm leading-relaxed">{profile.description}</p>
+                </div>
+              </div>
+
+              {/* Heatmap Card */}
+              <div className="p-6"> {/* Reduced padding */}
+                <div className="relative overflow-hidden rounded-lg shadow-inner-lg">
+                  <img
+                    src={profile.heatmapImage}
+                    alt={`${profile.username} Activity Heatmap`}
+                    className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Card Footer */}
+              <div className="px-6 pb-6"> {/* Reduced padding */}
+                <div className="flex items-center justify-between p-3 bg-gray-700/60 rounded-xl border border-gray-600 shadow-md"> {/* Reduced padding */}
+                  <div className="flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></div> {/* Smaller indicator */}
+                    <span className="text-xs font-medium text-gray-300">Active Profile</span> {/* Smaller text */}
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    Data updated daily
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </div>
+
+      {/* Footer Section */}
+      <footer className="bg-gray-900 border-t border-gray-700 py-3 px-4 text-center text-sm font-medium flex items-center justify-center gap-2 text-gray-400"> {/* Reduced vertical padding (py) */}
+        <Github className="w-4 h-4 text-gray-500" /> 
+        <span>This project is Open Source</span>
       </footer>
-    </div>
+    </main>
   );
 }
