@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { ExternalLink, Github, Trophy } from 'lucide-react';
+import { ExternalLink, Github } from 'lucide-react';
 
 export default function LeetCodePage() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
